@@ -60,4 +60,4 @@ async def on_member_remove(member):
             embed.description = f"{member.name}님이 서버를 나갔습니다.\n유저 ID: {member.id}"
             await channel.send(embed=embed)
 
-bot.run('TOKEN')
+bot.run(os.environ['TOKEN'])
