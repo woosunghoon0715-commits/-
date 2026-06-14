@@ -1,8 +1,6 @@
 import os
 import discord
-from discord.ext import commands
-
-import discord
+import asyncio
 from discord.ext import commands
 
 # 인텐트 설정
@@ -13,8 +11,7 @@ intents.message_content = True  # 명령어(!) 감지
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # 1. 관리자 ID 설정 (본인의 디스코드 ID를 숫자로 입력하세요)
-# * 본인 ID 확인법: 개발자 모드 켜기 -> 프로필 우클릭 -> ID 복사
-OWNER_ID = 123456789012345678 
+OWNER_ID = 1328373802014347308 
 
 # 로그 채널 ID를 저장할 변수
 log_channel_id = None
@@ -27,10 +24,14 @@ async def on_ready():
 # 2. 서버 입장 시 초대자 확인 및 추방 (초대 방지)
 @bot.event
 async def on_guild_join(guild):
+    # 로그가 생성될 시간을 3초간 기다립니다.
+    await asyncio.sleep(3) 
     async for entry in guild.audit_logs(limit=1, action=discord.AuditLogAction.bot_add):
-        if entry.user.id != OWNER_ID:
+        if entry.user.id != OWNER_ID:1328373802014347308
             print(f"권한 없는 사용자가 초대함: {entry.user.name}. 즉시 탈퇴합니다.")
             await guild.leave()
+        else:
+            print(f"허용된 사용자({entry.user.name})가 초대함. 정상 입장합니다.")
 
 # 3. 로그 채널 설정 명령어
 @bot.command()
