@@ -24,15 +24,13 @@ async def on_ready():
     print(f'{bot.user}로 로그인 성공!')
     print("초대 방지 및 입퇴장 로그 기능이 활성화되었습니다.")
 
-import asyncio # 코드 맨 위에 추가
-
+# 2. 서버 입장 시 초대자 확인 및 추방 (초대 방지)
 @bot.event
-ot.event
 async def on_guild_join(guild):
-    async for entry in guild.audit_logs(limit=1, action=discord.AuditLogAction.bot_add):
-        if entry.user.id != OWNER_ID:
-            print(f"권한 없는 사용자가 초대함: {entry.user.name}. 즉시 탈퇴합니다.")
-            await guild.leave()
+    async for entry in guild.audit_logs(limit=1, action=discord.AuditLogAction.bot_add):
+        if entry.user.id != OWNER_ID:
+            print(f"권한 없는 사용자가 초대함: {entry.user.name}. 즉시 탈퇴합니다.")
+            await guild.leave()
 
 # 3. 로그 채널 설정 명령어
 @bot.command()
